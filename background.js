@@ -1,8 +1,18 @@
 var loadedTabs = new Set()
+var initialized = false
 
 browser.tabs.onActivated.addListener(loadTab => {
   let current = false
   let count = 0
+
+  if(!initialized){
+    browser.tabs.onCreated.addListener(t => {
+      loadedTabs.add(t.id)
+    })
+    initialized = true
+  }
+
+  loadedTabs.add(loadTab.tabId)
 
   browser.tabs.query({}).then(tabs => {
     tabs.forEach(tab => {
@@ -22,9 +32,6 @@ browser.tabs.onActivated.addListener(loadTab => {
   })
 })
 
-browser.tabs.onCreated.addListener(t => {
-  loadedTabs.add(t.id)
-})
 browser.tabs.onRemoved.addListener(t => {
   loadedTabs.delete(t)
 })

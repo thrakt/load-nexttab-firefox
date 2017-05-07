@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Load next tabs",
-  "version": "1.0",
+  "version": "1.0.2",
   "description": "Load for next tabs.",
   "background": {
     "scripts": ["background.js"]
